@@ -28,7 +28,17 @@
 
 
 async function loadLocation() {
-  const response = await fetch('http://ip-api.com/json/');
+  const myIpAddress = await fetch("https://api.ipify.org?format=json");
+  
+  const ipAddress = await myIpAddress.json();
+  console.log("my IP Address is: ", ipAddress);
+  const response = await fetch("https://ip-geolocation-ipwhois-io.p.rapidapi.com/json/?ip="+ipAddress.ip, {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "ip-geolocation-ipwhois-io.p.rapidapi.com",
+		"x-rapidapi-key": "044e648b19mshfece6f865ead2b3p1a1a7ajsn036a4345378f"
+	}
+});
   const location = await response.json();
 
  document.getElementById("city").innerHTML = location.city;
@@ -65,5 +75,4 @@ loadLocation();
 
 </body>
 </html>
-
 
